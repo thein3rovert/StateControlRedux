@@ -122,3 +122,44 @@ In some other cases, where we have more than one properties in the object and we
          numOfCakes: state.numOfCakes - 1,
 }
 ```
+
+## The redux Store
+- Brings the actions and reducer together
+- One store for the entire application - like a frontend database.
+### Responsibility of the Redux Store
+- Holds appliction State
+- Store allows access to state by using the method `getState()`
+- Store allows states to be updated via `dispatch(action)`
+- Store registers listeners via subscribe(listener)
+- Stores handles unregistering of listeners via functions returned by subscribe(listener)
+
+The redux lib provide a method called `createStore` which we are going to use.
+First we import our store from redux
+```js
+const redux = require('redux')
+const createStore = redux.createStore
+```
+Then we create our store passing it the reducer, this makes the store hold the state of the application.
+```js
+const store = createStore(reducer)
+```
+Then after we use the method getState() to get the current state of the application and then printout the state to console
+```js
+console.log('Intial State', store.getState())
+```
+Then we Subscribe to the store, because the app cannot directly interact with the store it can only subscribe.
+```js
+store.subscribe(() => console.log('update state', store.getState()))
+```
+In other for us to update the store we have to use the dispatch method and then provide the action.
+```js
+store.dispatch(orderCake()) // THIS UPDATE THE STORE
+store.dispatch(orderCake()) 
+store.dispatch(orderCake()) 
+```
+Finally we unsubscribe from the store by returing the subscribe method
+```js
+const unsubscribe = store.subscribe(() => console.log('update state', store.getState()))
+
+unsubscribe()
+```
