@@ -113,3 +113,12 @@ const reducer = (state = initialState, action) => {
 }
 ```
 So the method reducer basically takes in the initialState and the action, using a switch statement, it checks if the action type of the actio is `CAKE_ORDERED`. If `true` then it returns numOfCakes - 1, so if the number of cakes is 10 it will return 9. If false it will `return` the state as it is.
+
+In some other cases, where we have more than one properties in the object and we want to update the numOfCakes, we have to first create a copy of the state object using the spread properties.
+```js
+ return {
+     //Create copy of state object
+         ...state, // This creates a copy of the state object.
+         numOfCakes: state.numOfCakes - 1,
+}
+```

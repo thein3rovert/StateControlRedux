@@ -13,13 +13,16 @@ function ordercake() {
 // Now lets create a reducer
 // PreviousState - 10 cakes 
 const initialState = {
-    numOfCakes: 10
+    numOfCakes: 10,
+    anotherProperty: 0, 
 }
 //(PreviousState, action) => newState
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case CAKE_ORDERED:
             return {
+                //Create copy of state object
+                ...state,
                 numOfCakes: state.numOfCakes - 1,
             }
             default:
