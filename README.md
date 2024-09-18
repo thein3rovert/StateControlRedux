@@ -163,3 +163,10 @@ const unsubscribe = store.subscribe(() => console.log('update state', store.getS
 
 unsubscribe()
 ```
+
+> Questions
+- How do i work with multiple reducers?
+- Can we have more than one actions in one action creator?
+- How do we struture actions in the creator?
+
+- Stopped at Restocking Cakes.
