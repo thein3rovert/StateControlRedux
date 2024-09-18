@@ -86,3 +86,30 @@ const reducer = (state = initialState, action) {
 
 We can use an action creator to create an action, an action creator is basically a `function` that `returns` an action.
 
+## Reducer
+Reducer specify how the application state changes in response to actions sent to the store.
+A reducer is a function that accepts state and actions as arguments, and return the next state of the application.
+
+So we created a initalState, this is the state that we see when we first open the shop for example. 
+```js
+const initialState = {
+    numOfCakes: 10
+}
+```
+This mean in the morning when the shop was open the number of cakes in the shop is basically 10.
+
+Then after that we now pass the initialState(previousState) in the reducers as a param(args).
+
+```js
+const reducer = (state = initialState, action) => {
+    switch (action.type) {
+        case CAKE_ORDERED:
+            return {
+                numOfCakes: state.numOfCakes - 1,
+            }
+            default:
+                return state
+    }
+}
+```
+So the method reducer basically takes in the initialState and the action, using a switch statement, it checks if the action type of the actio is `CAKE_ORDERED`. If `true` then it returns numOfCakes - 1, so if the number of cakes is 10 it will return 9. If false it will `return` the state as it is.

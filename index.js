@@ -11,4 +11,18 @@ function ordercake() {
 
 
 // Now lets create a reducer
+// PreviousState - 10 cakes 
+const initialState = {
+    numOfCakes: 10
+}
 //(PreviousState, action) => newState
+const reducer = (state = initialState, action) => {
+    switch (action.type) {
+        case CAKE_ORDERED:
+            return {
+                numOfCakes: state.numOfCakes - 1,
+            }
+            default:
+                return state
+    }
+}
