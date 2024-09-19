@@ -1,7 +1,7 @@
 // import redux from 'redux'
 const { cakereducer } = require('./reducers/cakeReducer');   // Ensure the name matches
 const { studentreducer } = require('./reducers/studentReducer');
-const { ordercake, csStudentRemoved } = require('./actions/actions')
+const { ordercake, csStudentRemoved, restockCake } = require('./actions/actions')
 
 
 const redux = require('redux')
@@ -74,16 +74,16 @@ store.dispatch(ordercake())
 store.dispatch(ordercake())
 store.dispatch(ordercake())
 store.dispatch(ordercake())
+
+store.dispatch(restockCake(4))
 //5. Unsubscribe from the store by calling the Unsubscribe method in other to do 
 //that we have to add a return to the subscribe method above
 unsubscribe()
 
 const studentStore = createStore(studentreducer)
-
 console.log('Intial Student State', studentStore.getState())
 
 const unsubscribeStudent = studentStore.subscribe(() => console.log('update state', studentStore.getState()))
-// 4. Povides a dispatch method to update the state
 studentStore.dispatch(csStudentRemoved())
 studentStore.dispatch(csStudentRemoved())
 studentStore.dispatch(csStudentRemoved())

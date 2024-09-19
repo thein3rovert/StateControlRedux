@@ -1,5 +1,5 @@
 //import { CAKE_ORDERED } from "./actionTypes"
-const { CAKE_ORDERED } = require('../actionTypes/actionTypes')
+const { CAKE_ORDERED, CAKE_RESTOCKED } = require('../actionTypes/actionTypes')
 
 // Initial state for the cake reducer
 const initialState = {
@@ -11,10 +11,15 @@ const initialState = {
     switch (action.type) {
         case CAKE_ORDERED:
             return {
+                ...state,
                 //Create copy of state object
-
                 numOfCakes: state.numOfCakes - 1,
             }
+            case CAKE_RESTOCKED:
+                return {
+                    ...state,
+                    numOfCakes: state.numOfCakes + action.payload,
+                }
             default:
                 return state
     }

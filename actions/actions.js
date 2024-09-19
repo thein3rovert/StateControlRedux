@@ -1,10 +1,16 @@
-const { CAKE_ORDERED, CS_STUDENT_REMOVED } = require('../actionTypes/actionTypes.js');
+const { CAKE_ORDERED, CS_STUDENT_REMOVED, CAKE_RESTOCKED } = require('../actionTypes/actionTypes.js');
 
  function ordercake() {
     return {
          type: CAKE_ORDERED,
          quantity: 1,
      }
+ }
+ function restockCake(quantity = 1) {
+    return {
+        type: CAKE_RESTOCKED,
+        payload: quantity
+    }
  }
  function csStudentRemoved() {
      return {
@@ -13,4 +19,4 @@ const { CAKE_ORDERED, CS_STUDENT_REMOVED } = require('../actionTypes/actionTypes
      }
  }
 
- module.exports = { ordercake, csStudentRemoved };
+ module.exports = { ordercake, csStudentRemoved, restockCake };
