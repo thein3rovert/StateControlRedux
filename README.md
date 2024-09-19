@@ -170,3 +170,82 @@ unsubscribe()
 - How do we struture actions in the creator?
 
 - Stopped at Restocking Cakes.
+
+So i modularize the code, make sure each functionalities have different folder.
+
+Today we will be starting from the restocking cake section
+## Restocking Cakes
+Everyday, a vendor comes to the shop to restock the shelves.
+The vendor can stock up one or more number of cakes depending on the previous day sales. 
+- Actor
+Vendor
+Stock
+Shelves
+
+- Use cases
+Restock the cakes on shelves
+### Implementation
+1.  First we need to determine the action type
+- ActionType
+`CAKE_RESTOCKED` is the eveent that happen whent the vendor restock the cake.
+2. Use the action type to define an action creator
+- Action Creator
+We create a restock function called restockCake and then return an object with a property type and then we added a quantity parameter for the cake object.
+```js
+ function restockCake(quantity = 1) {
+    return {
+        type: CAKE_RESTOCKED,
+        quantity
+    }
+ }
+```
+3. Create a reducer from the cakeRestock
+
+In this example we will not create a new reducer for the cake restock, instead we will use an existing reducer meaning we will only update the state of the cakeReducer.
+
+So first we create a new case statement and then return a new `object`. 
+> Always remember in `redux` we dont directly `mutate/update` state so what we have to do is `spread` the existing state [...] so that we dont affect other `properties` in the state object in our case we previously had a `numOfCakes` `properties` related to the case `CAKE_ORDERED` and we dont want to affect that.
+
+So when a cake restock `event` has been dispatched(executed/activated/triggered), we want to `increase` the number of cake
+
+```js
+    case CAKE_RESTOCKED:
+        return {
+        ...state,
+        numOfCakes: state.numOfCakes + 1
+    }
+```
+In the code (case) above this will only restock only one cake, because we hardcodede the value to restock, so the best thing to do is use the param associated with the restockCake function.
+```js
+    case CAKE_RESTOCKED:
+        return {
+        ...state,
+        numOfCakes: state.numOfCakes + action.quanity
+    }
+```
+This will restock based on the quantity provided.
+4. Store
+Now in the stock since we initially removed 4 cakes from the numOfCakes, we will make sure the quantity for the restock cake will be 4, you can restock any number but just so we can see the stock bacl to being full(10). 
+So we go to our subscribed Store and dispatch teh restockCake event passing in the quantity.
+```js
+store.dispatch(restockCake(4))
+```
+> Tips
+Always make sure to use payload instead of quantity, becuase in redux paylaod is used for any addtional attributed.
+```js
+ function restockCake(quantity = 1) {
+    return {
+        type: CAKE_RESTOCKED,
+        payload: quantity // Renamed
+    }
+ }
+
+return {
+        ...state,
+        numOfCakes: state.numOfCakes + action.payload //Renamed
+}
+```
+Then we run
+```bash
+node index
+```
