@@ -1,12 +1,22 @@
 //import { CAKE_ORDERED } from "./actionTypes"
 const { CAKE_ORDERED, CAKE_RESTOCKED } = require('../actionTypes/actionTypes')
 
-// Initial state for the cake reducer
+
+/*
+===================
+currentState
+===================
+*/
 const initialState = {
     numOfCakes: 10
 }
 
-// Cake reducer function
+
+/*
+===================
+Reducer: (currentState, event)
+===================
+*/
  const cakereducer = (state = initialState, action) => {
     switch (action.type) {
         case CAKE_ORDERED:

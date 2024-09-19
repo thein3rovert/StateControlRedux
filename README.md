@@ -249,3 +249,20 @@ Then we run
 ```bash
 node index
 ```
+
+### Bind Action Creators
+This is a helper function provided by Redux.
+So for the bind action, first we need to import the  bindActionCreator helper function
+```js
+const bindActionCreators = redux.bindActionCreators
+```
+Then we created a new function called actions, that takes in the bindActionCreator which takes in the actions and then dispatch the store.
+```js
+const actions = bindActionCreators({ordercake, restockCake}, store.dispatch)
+```
+Then we call the actions and dispatch the actions
+```js
+actions.ordercake()
+actions.restockCake(4)
+```
+BindActionCreators is not really neccessary, use to be helpful but not anymore.

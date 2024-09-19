@@ -6,6 +6,7 @@ const { ordercake, csStudentRemoved, restockCake } = require('./actions/actions'
 
 const redux = require('redux')
 const createStore = redux.createStore
+const bindActionCreators = redux.bindActionCreators
 
 
 
@@ -70,12 +71,17 @@ console.log('Intial State', store.getState())
 // 3. Allow apps to subscribe to the store
 const unsubscribe = store.subscribe(() => console.log('update state', store.getState()))
 // 4. Povides a dispatch method to update the state
-store.dispatch(ordercake())
-store.dispatch(ordercake())
-store.dispatch(ordercake())
-store.dispatch(ordercake())
-
-store.dispatch(restockCake(4))
+// store.dispatch(ordercake())
+// store.dispatch(ordercake())
+// store.dispatch(ordercake())
+//store.dispatch(ordercake())
+const actions = bindActionCreators({ordercake, restockCake}, store.dispatch)
+actions.ordercake()
+actions.ordercake()
+actions.ordercake()
+actions.ordercake()
+actions.restockCake(4)
+//store.dispatch(restockCake(4))
 //5. Unsubscribe from the store by calling the Unsubscribe method in other to do 
 //that we have to add a return to the subscribe method above
 unsubscribe()
@@ -88,4 +94,3 @@ studentStore.dispatch(csStudentRemoved())
 studentStore.dispatch(csStudentRemoved())
 studentStore.dispatch(csStudentRemoved())
 unsubscribeStudent()
-
