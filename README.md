@@ -341,5 +341,85 @@ const initialIceCreamsState = {
 ```
 Now we will also create two reducers,one for handling cake and other for handling icecream
 
+## Combine Reducers
+First we import with combineReducers, this helps us to combine multiple reducers.
+```js
+const combineReducers = redux.combineReducers
+```
+Then we create a rootReducer function, this function hold the values of all the reducer by passing it a key and then a values , the value being the reducers.
+```js
+const rootReducer = combineReducers({
+    // (Key = values)
+    cake: cakereducer,
+    iceCream: iceCreamReducer
+})
+```
+As explained above, instead of passing multiple reducers to the store, we only need the pass in the rootReducers instead.
+```js
+const store = createStore(rootReducer)
+```
 
+## Immer
+Immer is a library that will help when workng with redux.
+In the case where we have nested-state, it can be quite complicated to update a propeety in a state without affecting to other properties, previously we use spread to basically update the properties of the initial state so we dont affect others. 
 
+Let give an example, we will create a nested0-state called the `nested-state` then we create our initial state.
+```js
+const intialState = {
+    name: 'Visha',
+    address: {
+        street: '123 Main St',
+        city: 'Boston',
+        state: 'MA'
+    },
+}
+```
+so what we want to do now is chanage the street address in this object without affecting the other properties in this object.
+
+Here is how we will do this in the redux pattern:
+- First we create action type
+```js
+const STREET_UPDATED = "STREET_UPDATED"
+```
+- We define the action creator which returns the action object, so we pass in the street as the param because we will be passing in and returning the street.
+```js
+const updateStreet = (street) => {
+    return {
+        type: STREET_UPDATED,
+        payload: street,
+    }
+}
+```
+- Define the reducer to handle the action
+```js
+const nestedReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case STREET_UPDATED:
+            return {
+                ...state,
+                address: {
+                    ...state.address,
+                    street: action.payload
+                },
+            }
+        default: {
+            return state
+        }
+    }
+} 
+```
+
+Todo: Explain this snippet
+
+- Create the store and subscribe to the store
+```js
+const store = redux.createStore(nestedReducer)
+console.log('Initial State', store.getState())
+const unsubscribe= store.subscribe(() => {
+    console.log('Updated State ', store.getState())
+})
+store.dispatch(updateStreet('456 Main St'))
+unsubscribe
+```
+
+Todo: Continue with using immer to simplify the nested-state then implement changing the state or the Name in the object.

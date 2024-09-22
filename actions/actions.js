@@ -1,4 +1,4 @@
-const { CAKE_ORDERED, CS_STUDENT_REMOVED, CAKE_RESTOCKED, ICECREAM_ORDERED, ICECREAM_RESTOCKED } = require('../actionTypes/actionTypes.js');
+const { CAKE_ORDERED, CS_STUDENT_REMOVED, CAKE_RESTOCKED, ICECREAM_ORDERED, ICECREAM_RESTOCKED, STREET_UPDATED } = require('../actionTypes/actionTypes.js');
 
 /*
 ===================
@@ -52,4 +52,15 @@ function:csStudentRemoved
      }
  }
 
- module.exports = { ordercake, csStudentRemoved, restockCake, orderIceCream, restockIceCream };
+  /*
+===================
+function:updateStreet
+===================
+*/
+const updateStreet = (street) => {
+    return {
+        type: STREET_UPDATED,
+        payload: street,
+    }
+}
+ module.exports = { ordercake, csStudentRemoved, restockCake, orderIceCream, restockIceCream, updateStreet };
