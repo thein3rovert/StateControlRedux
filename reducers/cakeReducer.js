@@ -8,18 +8,24 @@ currentState
 Question? Do we have to keep the state in the same class as the reducer
 ===================
 */
-const initialState = {
-    numOfCakes: 10,
-    numOfIceCreams: 20
-}
+// const initialState = {
+//     numOfCakes: 10,
+//     numOfIceCreams: 20
+// }
 
+const initialCakeState = {
+    numOfCakes: 10,
+}
+// const initialIceCreamState = {
+//     numOfIceCreams: 20
+// }
 
 /*//
 ===================
 Reducer: (currentState, event)
 ===================
 */
- const cakereducer = (state = initialState, action) => {
+ const cakereducer = (state = initialCakeState, action) => {
     switch (action.type) {
         case CAKE_ORDERED:
             return {
@@ -32,17 +38,17 @@ Reducer: (currentState, event)
                     ...state,
                     numOfCakes: state.numOfCakes + action.payload,
                 }
-            case ICECREAM_ORDERED:
-                return {
-                ...state,
-                //Create copy of state object
-                numOfIceCreams: state.numOfIceCreams - 1,
-            }
-            case ICECREAM_RESTOCKED:
-                return {
-                    ...state,
-                    numOfIceCreams: state.numOfIceCreams + action.payload,
-                }
+            // case ICECREAM_ORDERED:
+            //     return {
+            //     ...state,
+            //     //Create copy of state object
+            //     numOfIceCreams: state.numOfIceCreams - 1,
+            // }
+            // case ICECREAM_RESTOCKED:
+            //     return {
+            //         ...state,
+            //         numOfIceCreams: state.numOfIceCreams + action.payload,
+            //     }
             default:
                 return state
     }
@@ -50,11 +56,11 @@ Reducer: (currentState, event)
 
 /* 
 ======================
-Ignore IceCream redcucer
+IceCream redcucer
 ======================
 */
 
-// const iceCreamReducer = (state = initialState, action) => {
+// const iceCreamReducer = (state = initialIceCreamState, action) => {
 //     switch (action.type) {
 //         case ICECREAM_ORDERED:
 //             return {
@@ -68,8 +74,9 @@ Ignore IceCream redcucer
 //                     numOfIceCreams: state.numOfIceCreams + action.payload,
 //                 }
 //             default:
-//                 return state
-//     }
+//                 return state    }
 // } 
 
-module.exports = {cakereducer}
+module.exports = {
+    cakereducer
+}

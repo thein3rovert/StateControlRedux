@@ -1,9 +1,12 @@
 const { cakereducer } = require('./reducers/cakeReducer'); 
+const { iceCreamReducer } = require('./reducers/iceCreamReducer'); 
 const { studentreducer } = require('./reducers/studentReducer');
 const { ordercake, csStudentRemoved, restockCake, orderIceCream, restockIceCream } = require('./actions/actions')
 const redux = require('redux')
 const createStore = redux.createStore
 const bindActionCreators = redux.bindActionCreators
+const combineReducers = redux.combineReducers
+
 
 
 /*
@@ -62,8 +65,22 @@ Create and Unsubscribe from store
 ======================
 */
 
+/* 
+======================
+Using multiple reducers
+ This method accept an object an object, the key value of this
+ object is multiple reducers
+======================
+*/
+const rootReducer = combineReducers({
+    // (Key = values)
+    cake: cakereducer,
+    iceCream: iceCreamReducer
+})
+
+const store = createStore(rootReducer)
 // 1. Redux store holds the application state
-const store = createStore(cakereducer)
+// const store = createStore(cakereducer)
 // 2. Allows access to state via getState()
 console.log('Intial State', store.getState())
 // 3. Allow apps to subscribe to the store
