@@ -1,4 +1,4 @@
-const { CAKE_ORDERED, CS_STUDENT_REMOVED, CAKE_RESTOCKED } = require('../actionTypes/actionTypes.js');
+const { CAKE_ORDERED, CS_STUDENT_REMOVED, CAKE_RESTOCKED, ICECREAM_ORDERED, ICECREAM_RESTOCKED } = require('../actionTypes/actionTypes.js');
 
 /*
 ===================
@@ -22,6 +22,24 @@ function:restockCake
         payload: quantity
     }
  }
+  /*
+===================
+function:orderIceCream
+===================
+*/
+function orderIceCream() {
+    return {
+        type: ICECREAM_ORDERED,
+        quantity: 1,
+    }
+}
+function restockIceCream(quantity = 1) {
+    return {
+        type: ICECREAM_RESTOCKED,
+        payload: quantity, 
+    }
+}
+
  /*
 ===================
 function:csStudentRemoved 
@@ -34,4 +52,4 @@ function:csStudentRemoved
      }
  }
 
- module.exports = { ordercake, csStudentRemoved, restockCake };
+ module.exports = { ordercake, csStudentRemoved, restockCake, orderIceCream, restockIceCream };

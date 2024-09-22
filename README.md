@@ -266,3 +266,78 @@ actions.ordercake()
 actions.restockCake(4)
 ```
 BindActionCreators is not really neccessary, use to be helpful but not anymore.
+
+## Cake and Ice creams (Cake Shop Expansion)
+- We have a Cake shop
+- Cakes stored on the shelf
+- The ShopKeeper handles CAKE_ORDERED from customer
+---------------------------------------------------------
+- Now the cake shop want to expland to ice creams!!
+- Ice Creams will be stored in the Freezer
+- We have a new shopkeeper to handle the `ICECREAM_ORDERED` from customer.
+
+One most important thing to keep in mind is that the `state` of the shop is now
+both the `cakes` on the shelf along with the number of `ice-creams` in the freezer.
+
+We could have just one shop keeper handle the state of the shop but what if we want to scale the shop..thats why we have two shop keeper instead.
+One person selling both cakes and ice cream will be somehow difficault to handle.
+
+Also if something was to happen with the cake order we narrow it down to the shopkeeper than handle the CAKE_ORDER and if the something was to happen with the ice-cream we can narrow it down to the shopkeeper that handle the ICE_CREAM order.
+
+### Multiple Reducer
+In this section, because we have new shop item( iceCream), we have to have new actions related to the ice cream like restocking the shelf with ice cream and handling ice-cream order.
+- First we have to define the actionTypes
+```js
+const ICECREAM_ORDERED = 'ICECREAM_ORDERED';
+const ICECREAM_RESTOCKED = 'ICECREAM_RESTOCKED';
+```
+- Then we define the actions creators for the actionTypes
+```js
+function orderIceCream(quantity = 1) {
+    return {
+        type: ICECREAM_ORDERED,
+        payload: quantity
+    }
+}
+function restockIceCream(quantity = 1) {
+    return {
+        type: ICECREAM_RESTOCKED,
+        payload: quantity
+    }
+}
+```
+- Next we add another state object to the initial property, since the ice cream belongs to the shop and also on the same shelf, we dont have to create a new state for the for the ice cream, we just have to update the state.
+
+```JS
+const iceCreamReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case ICECREAM_ORDERED:
+            return {
+                ...state,
+                //Create copy of state object
+                numOfIceCreams: state.numOfIceCreams - 1,
+            }
+            case ICECREAM_RESTOCKED:
+                return {
+                    ...state,
+                    numOfIceCreams: state.numOfIceCreams + action.payload,
+                }
+            default:
+                return state
+    }
+} 
+```
+> Warning
+You cannot pass in more than one reducers to a store, this can only be done using combine reducer which we will get to later.
+
+In the case of using multiple reducers we will create two state, one for cake and one for ice cream. This was our state before, now we will break it down into two state so they wont affect each other.
+```js
+const initialCakeState = {
+    numOfCakes: 10,
+}
+const initialIceCreamsState = {
+    numOfIceCreams: 20
+}
+```
+Now we will also create two reducers,one for handling cake and other for handling icecream
+

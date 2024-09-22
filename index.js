@@ -1,6 +1,6 @@
 const { cakereducer } = require('./reducers/cakeReducer'); 
 const { studentreducer } = require('./reducers/studentReducer');
-const { ordercake, csStudentRemoved, restockCake } = require('./actions/actions')
+const { ordercake, csStudentRemoved, restockCake, orderIceCream, restockIceCream } = require('./actions/actions')
 const redux = require('redux')
 const createStore = redux.createStore
 const bindActionCreators = redux.bindActionCreators
@@ -27,15 +27,6 @@ function csStudentRemoved() {
 }
 
 
-Now lets create a reducer
-PreviousState - 10 cakes 
-const initialState = {
-    numOfCakes: 10,
-}
-// Create reducer for students
-const initialStudentState = {
-    enrolledStudent: 10,
-}
 
 (PreviousState, action) => newState
 const reducer = (state = initialState, action) => {
@@ -64,6 +55,7 @@ const studentReducer = (state = initialStudentState, action) => {
 ======================
 */
 
+
 /* 
 ======================
 Create and Unsubscribe from store
@@ -89,12 +81,27 @@ With and Without bindActionsCreator
 // store.dispatch(ordercake())
 //store.dispatch(ordercake())
 //store.dispatch(restockCake(4))
-const actions = bindActionCreators({ordercake, restockCake}, store.dispatch)
+const actions = bindActionCreators({ordercake, restockCake, orderIceCream, restockIceCream}, store.dispatch)
 actions.ordercake()
 actions.ordercake()
 actions.ordercake()
 actions.ordercake()
 actions.restockCake(4)
+
+/* 
+======================
+IceCream Dispatch
+Todo: Need to fix issue with returning the state.
+======================
+*/
+actions.orderIceCream()
+actions.orderIceCream()
+actions.orderIceCream()
+actions.orderIceCream()
+actions.orderIceCream()
+actions.restockIceCream(2)
+
+
 
 /* 
 ======================
