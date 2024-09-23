@@ -408,8 +408,7 @@ const nestedReducer = (state = initialState, action) => {
     }
 } 
 ```
-
-Todo: Explain this snippet
+The `nextReducer` serves as a reducewr for the nested state, it takes in the initial state and an action, the create a switch statement that perform an action if the case is `STREET_UPDATED`, so it the action is triggered update the state and return an object if the street. So we had to first spread the state then spread the address so we wont affect other properties of the state and address object.
 
 - Create the store and subscribe to the store
 ```js
@@ -421,5 +420,41 @@ const unsubscribe= store.subscribe(() => {
 store.dispatch(updateStreet('456 Main St'))
 unsubscribe
 ```
+Finally we created a redux store which takes in the reducer and the subscribe to the store.
 
 Todo: Continue with using immer to simplify the nested-state then implement changing the state or the Name in the object.
+#### Immer impl
+So we can also spread the state each time we want to make an update to this state properties which is fine but in a much larger application, it is really hard to keep track of the states so in other to improve and simplify this process we make use of a library called `Immer`.
+
+- First we need to install the package
+```bash
+npm i immer
+```
+- Import a method called producer from the immer library
+```js
+const produce = require('immer').produce
+```
+- Instead of returning the properties, we will just return produce.
+```js
+return produce(state, () => (draft) => )
+```
+The first arg is the current state, the second arg is the `function` which `recieves` a `draft` copy of the `state`. 
+
+Immer allows is to do is udpdate the draft copy of the state as if the state is multable. 
+```js
+  return produce(state, (draft) => {
+                draft.address.street = action.payload
+            })
+```
+In this code above using the immer we are updating the properties directly, however under the hood, immer is doing something similar to this.
+```js
+// return {
+            //     ...state,
+            //     address: {
+            //         ...state.address,
+            //         street: action.payload
+            //     },
+            // }
+```
+So now if we save an run, `node nexted-state` we get the same output as before.
+So basically Immer simplify handling complex data structures and work very well with redux.
