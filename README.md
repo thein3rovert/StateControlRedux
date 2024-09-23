@@ -501,3 +501,77 @@ Steps
 1. Import applyMiddleware
 2. Pass it as an argument to the createStore
 3. Then pass in the middleware to the applyMiddleware.
+
+## Async Actions
+- Synchronous Actions: This mean as soon as an action was dispatch, then state was updated immediately. When we dispatch the `CAKE_ORDERED` action, the `numOfCakes` was immediately `decremented` by 1. Same with the other actions as well.
+
+- Async Actions: We will need this actions when we want to call to fectch data from an end point and use the data in an application.
+
+### Application
+The application we are going to build will `fetch` a list of `users` from  an API end point and `stores` it in the redux `store`.
+
+In other to do this we need to first understand the following:
+- State
+- Action
+- Reducer
+
+
+#### State Object
+```js
+{
+ loading: true, //Indicate weather is data is currently being fectch or not.
+ data: [], // Data that is being fetch (users), currently empty(no users)
+ error: '' // Incase our Api request fail for some reason, we store the error messages.
+}
+```
+- Loading: Display a loading spinner in component.
+- Data: List of users.
+- error: Display error to the user.
+
+
+#### Action Object
+- FETCH_USERS_REQUESTED - Fetch list of users
+The second and the third action are dependent on the first action, if the FETCH_USERS_REQUESTED is successful then can we get the list of users else we get an error.
+- FETCH_USERS_SUCCEEDED - Users fetch successfully
+- FETCH_USERS_FAILED - Error when fetching the users.
+
+
+#### Reducer Object
+- If action type is FETCH_USERS_REQUESTED, we set loading to true.
+```js
+case: FETCH_USERS_REQUESTED
+    loading: true
+```
+- If action type is FETCH_USERS_SUCCEEDED, we set loading to false and users returned from the API.
+```js
+case: FETCH_USERS_SUCCEEDED
+    loading: false
+    users: data (from API)
+```
+- If action type is FETCH_USERS_SUCCEEDED, we set loading to false and error to error returned from the API.
+```js
+case: FETCH_USERS_FAILED
+    loading: false
+    users: error (from API)
+```
+#### Application Implementation
+- Defines the state
+```js
+const initialState = {
+    loading: false,
+    users: [],
+    error: '',
+}
+```
+- Defines the action
+```js
+const FETCH_USERS_REQUESTED = 'FETCH_USERS_REQUESTED';
+const FETCH_USERS_SUCCEEDED = 'FETCH_USERS_SUCCEEDED';
+const FETCH_USERS_FAILED = 'FETCH_USERS_FAILED';
+```
+- Defines the reducer
+
+- Create redux store
+What is next now is making an api call and dispatch the appropriate api call.
+
+## Redux Thunk Middleware
