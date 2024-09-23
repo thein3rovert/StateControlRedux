@@ -458,3 +458,46 @@ In this code above using the immer we are updating the properties directly, howe
 ```
 So now if we save an run, `node nexted-state` we get the same output as before.
 So basically Immer simplify handling complex data structures and work very well with redux.
+
+### Middleware
+Middleware is an suggested way to extend redux with custom functionality, if there is any case where we want redux with extra features then middleware is the way to go.
+
+In provides a thirdpary extension point between ==dispacting an action== and the moment it reaches the reducer.
+
+Middleware can be use for crash reporting, logging, performing asynchronous tasks etc. 
+
+#### How to use a middleware
+Using the redux logger lib - log every information relating to redux application.
+```bash
+npm i redux-logger
+```
+Next we impoer the redux logger from redux logger, using the reduxlogger we were able to create our logger middleware for the application.
+```js
+const logger = reduxLogger.createLogger() 
+```
+In other to imclude a middleware, the reduxLogger library offers a funtion called `appyMiddleware` which is used to apply middleware. Now we will import the apply middleware function. 
+
+After importing the applyMiddleware function we will then go to the createStore function and then add the applyMiddleware as arg, we can add as many middleware as want in the application,
+```js
+const applyMiddleware = redux.applyMiddleware
+const store = createStore(rootReducer, applyMiddleware(logger))
+```
+Then finally we will remove the console-log statement in the store subscribtion as we now have the logger to handle that and if we run the application we should be able to see thw logs.
+```text
+Intial State { cake: { numOfCakes: 10 }, iceCream: { numOfIceCreams: 20 } }
+ action CAKE_ORDERED @ 12:54:12.632
+   prev state { cake: { numOfCakes: 10 }, iceCream: { numOfIceCreams: 20 } }
+   action     { type: 'CAKE_ORDERED', quantity: 1 }
+   next state { cake: { numOfCakes: 9 }, iceCream: { numOfIceCreams: 20 } }
+ action CAKE_ORDERED @ 12:54:12.634
+   prev state { cake: { numOfCakes: 9 }, iceCream: { numOfIceCreams: 20 } }
+   action     { type: 'CAKE_ORDERED', quantity: 1 }
+   next state { cake: { numOfCakes: 8 }, iceCream: { numOfIceCreams: 20 } }
+ action CAKE_ORDERED @ 12:54:12.636
+   prev state { cake: { numOfCakes: 8 }, iceCream: { numOfIceCreams: 20 } }
+   action     { type: 'CAKE_ORDERED', quantity: 1 }
+```
+Steps
+1. Import applyMiddleware
+2. Pass it as an argument to the createStore
+3. Then pass in the middleware to the applyMiddleware.

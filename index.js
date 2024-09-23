@@ -6,7 +6,16 @@ const redux = require('redux')
 const createStore = redux.createStore
 const bindActionCreators = redux.bindActionCreators
 const combineReducers = redux.combineReducers
+const applyMiddleware = redux.applyMiddleware
+// Import / require redux loger
+const  reduxLogger = require('redux-logger')
 
+/* 
+======================
+Create the logger middleware
+======================
+*/
+const logger = reduxLogger.createLogger() 
 
 
 /*
@@ -65,7 +74,15 @@ Create and Unsubscribe from store
 ======================
 */
 
+// const store = createStore(rootReducer)
+// // 1. Redux store holds the application state
+// // const store = createStore(cakereducer)
+// // 2. Allows access to state via getState()
+// console.log('Intial State', store.getState())
+// // 3. Allow apps to subscribe to the store
+// const unsubscribe = store.subscribe(() => console.log('update state', store.getState()))
 /* 
+
 ======================
 Using multiple reducers
  This method accept an object an object, the key value of this
@@ -78,14 +95,13 @@ const rootReducer = combineReducers({
     iceCream: iceCreamReducer
 })
 
-const store = createStore(rootReducer)
+const store = createStore(rootReducer, applyMiddleware(logger))
 // 1. Redux store holds the application state
 // const store = createStore(cakereducer)
 // 2. Allows access to state via getState()
 console.log('Intial State', store.getState())
 // 3. Allow apps to subscribe to the store
-const unsubscribe = store.subscribe(() => console.log('update state', store.getState()))
-
+const unsubscribe = store.subscribe(() => {})
 
 /* 
 ======================
