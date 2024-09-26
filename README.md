@@ -575,3 +575,67 @@ const FETCH_USERS_FAILED = 'FETCH_USERS_FAILED';
 What is next now is making an api call and dispatch the appropriate api call.
 
 ## Redux Thunk Middleware
+Making an API call when working with redux, there are twp packages we need to install:
+1. AXIOS - This will be used to make GET request to an API endpoint.
+2. REDUX-THUNK: This is the standard way to define async action creators in a redux application. This middle-thunk library is the `middleware` we will be applying to our redux store.  
+
+#### Define Async action creator using AXIOS and REDUX-THUNK
+- First we need to install the two packages:
+```bash
+npm i axios redux-thunk
+```
+- Apply the redux-thunk middleware to our redux store, in other to do this have to first import the applymiddleware function then after we add the applymiddleware to our createStrore param. 
+```js
+const applyMiddleware = redux.applyMiddleware
+const store = createStore(reducer, applyMiddleware)
+```
+The argument to apply middleware will be the `thunk` middleware unlike the previous applymiddleware were we passed in the logger. In this case we are passing in the thunk. In other to add the thunk Middleware we first have to import the thunk redux-thunk then pass it to the applyMiddleware.
+```js
+const store = createStore(reducer, applyMiddleware(thunkMiddleware))
+```
+Now the final step is to define our async action creator, in the case of the async action creator we all know that `initally` an `actionCreator` is meant to return an `action` but what is require by the `thunk middleware` is the ablity for an action to return a `function` instead of an `action` object(advantage).
+
+>What is allow by this fuctuin is it doesnt have to be pure, it is allowed to have side effects such as the asynchronous api call and these functions can also dispatch actions like the one we have seen before. This done because the function recieves the `dispatch` actions as argument.
+```js
+const fetchUsers = () => {
+    return function(dispatch) {
+        axios.
+    }
+}
+```
+
+Now lets see how to call axios in the fuction, first we need to import axios, for the request we are going to be using `JSON PLACEHOLDER.`
+So in the return function we pass in the dispatch and then use axios to get a user object from the Json Placeholder Library then dispatching the action to the response.
+```js
+const fetchUsers = () => {
+    return function(dispatch) {
+        // Before we dispatch our api we have to dispatch our actions
+        dispatch(fetchUsersRequest())
+        axios.get('https://jsonplaceholder.typicode.com/users').then(response => {
+            //respose.data is the users 
+            const users = response.data.map(user => user.id)
+            dispatch(fetchUsersSuccess(users))
+        }).catch(error => {
+           // error.message is the error message
+           dispatch(fetchUsersFailure(error.message))
+        })
+    }
+}
+```
+After we then subscribe to the store and dispatch the fetchUsers functions.
+```js
+store.subscribe(() => {console.log(store.getState())})
+store.dispatch(fetchUsers())
+```
+Then we run the application, This is the end of the Redux, then next thing to move to is redux toolkit so thats what we are going to be working in next.
+
+```bash
+node index.js
+node nested-state.js
+node asyncActions.js
+```
+
+
+
+
+
